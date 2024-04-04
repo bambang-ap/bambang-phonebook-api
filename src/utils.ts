@@ -5,7 +5,7 @@ import { NextApiRequest } from "next";
 export function listContacts() {
 	const list = fs.readFileSync(contactPath);
 	const data: TContactId[] = JSON.parse(list as unknown as string);
-	console.log(data);
+
 	return data;
 }
 
