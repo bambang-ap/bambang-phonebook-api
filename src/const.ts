@@ -1,2 +1,2 @@
 export const root = "./public/images";
-export const contactPath = `./public/contacts.json`;
+export const contactPath = `./contacts.json`;
