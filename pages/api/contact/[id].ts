@@ -46,4 +46,5 @@ async function editContact(
 
 async function deleteContact(id: string, res: NextApiResponse<ResponseData>) {
 	await orm.delete(Contact).where(eq(Contact.id, id));
+	res.status(200).json({ message: "Success" });
 }
