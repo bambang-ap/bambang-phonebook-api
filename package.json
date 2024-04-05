@@ -6,8 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "latest",
+    "@vercel/postgres": "^0.8.0",
     "global-methods": "bambang-ap/global-methods#2.7.4",
+    "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
