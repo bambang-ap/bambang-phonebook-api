@@ -134,6 +134,11 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
+drizzle-orm@^0.30.7:
+  version "0.30.7"
+  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.30.7.tgz#a7aeb9872af74bf4d4c589dbdb6eca56a66fc078"
+  integrity sha512-9qefSZQlu2fO2qv24piHyWFWcxcOY15//0v4j8qomMqaxzipNoG+fUBrQ7Ftk7PY7APRbRdn/nkEXWxiI4a8mw==
+
 global-methods@bambang-ap/global-methods#2.7.4:
   version "2.7.4"
   resolved "https://codeload.github.com/bambang-ap/global-methods/tar.gz/313e34bd4ec3891b3a3819990ffa3a731efb77bc"

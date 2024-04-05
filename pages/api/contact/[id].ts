@@ -1,8 +1,6 @@
-import "global-methods";
-import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { listContacts, saveImage } from "../../../src/utils";
-import { contactPath } from "../../../src/const";
+import { Contact, orm } from "../../../src/database";
+import { eq } from "drizzle-orm";
 
 export default function contactIdHandler(
 	req: NextApiRequest,
@@ -22,46 +20,30 @@ export default function contactIdHandler(
 	}
 }
 
-function getContact(id: string, res: NextApiResponse<null | TContact>) {
-	const contacts = listContacts();
+async function getContact(id: string, res: NextApiResponse<null | TContact>) {
+	const [contact] = await orm.select().from(Contact).where(eq(Contact.id, id));
 
-	const contact = contacts.find((e) => e.id === id);
-
-	res.status(200).json(contact ? contact : null);
+	res.status(200).json(contact);
 }
 
-function editContact(
+async function editContact(
 	id: string,
 	req: NextApiRequest,
 	res: NextApiResponse<ResponseData>
 ) {
-	const body: TContact = req.body;
+	const newContact = entries(req.body).reduce<Partial<TContact>>(
+		(ret, [k, v]) => {
+			if (!!v) ret[k] = v;
+			return ret;
+		},
+		{}
+	);
 
-	const contacts = listContacts();
-	const i = contacts.findIndex((e) => e.id === id);
+	await orm.update(Contact).set(newContact).where(eq(Contact.id, id));
 
-	if (i >= 0) {
-		const photo = saveImage(req, body.photo);
-
-		fs.writeFileSync(
-			contactPath,
-			JSON.stringify(contacts.replace(i, { ...contacts[i], ...body, photo })),
-			"utf8"
-		);
-		res.status(200).json({ message: "Success" });
-	} else {
-		res.status(400).json({ message: "Failed" });
-	}
+	res.status(200).json({ message: "Success" });
 }
 
-function deleteContact(id: string, res: NextApiResponse<ResponseData>) {
-	const contacts = listContacts();
-	const i = contacts.findIndex((e) => e.id === id);
-
-	if (i >= 0) {
-		fs.writeFileSync(contactPath, JSON.stringify(contacts.remove(i)), "utf8");
-		res.status(200).json({ message: "Success" });
-	} else {
-		res.status(400).json({ message: "Failed" });
-	}
+async function deleteContact(id: string, res: NextApiResponse<ResponseData>) {
+	await orm.delete(Contact).where(eq(Contact.id, id));
 }
